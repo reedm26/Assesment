@@ -2,11 +2,13 @@
   <div>
     <div class="cardsContainer">
       <div class="card" style="width: 18rem;" v-for="(c, index) in checks" :key="index">
-        <img :src=c.img class="card-img-top" style=" height: 11rem;;">
+        <img :src=c.img class="card-img-top" style=" height: 11rem;" alt={{c.title}}>
         <div class="card-body">
           <h5 class="card-title">{{ c.title }}</h5>
-          <h4 class="checkValid" :key="index" v-if="c.valid === true"> Yes </h4>
-          <h6 style="color: red" :key="index" v-if="c.valid === false"> Previous needs to be checked </h6>
+          <h4 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h4>
+          <p :key="c.id" v-if="index === 0 && c.valid === false"> Start here</p>
+          <p style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </p>
+
           <button v-bind="(c)" type="button" :key="index" @click="runCheck(c, index)" class="btn btn-primary">Run Check
           </button>
           <p>{{ index }}</p>
@@ -55,7 +57,6 @@ export default {
         },
 
       ],
-      notReady: true
     }
   },
 
@@ -66,7 +67,6 @@ export default {
     },
 
     validatePreviousCheck: function (checks, index) {
-      // let previousIndex = index -= 1;
       if (index === 0) {
         return checks.valid = !checks.valid
       } else if (this.checks[index -= 1].valid === false) {
