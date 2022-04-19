@@ -1,15 +1,22 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Flight Plan
+  </h1>
+  <i class="bi bi-ui-checks"></i>
+  <div class="container">
+    <FlightDashboard />
+  </div>
+  <!--  <HelloWorld msg="Welcome to Your Vue.js App"/>-->
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+import FlightDashboard from "@/components/FlightDashboard";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    FlightDashboard
   }
 }
 </script>
