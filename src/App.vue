@@ -1,7 +1,7 @@
 <template>
   <h1>Flight Plan
   </h1>
-  <i class="bi bi-ui-checks"></i>
+  <i class="bi bi-ui-checks" style="font-size: 7rem"></i>
   <div class="container">
     <FlightDashboard />
   </div>
