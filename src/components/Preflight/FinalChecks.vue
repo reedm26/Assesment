@@ -36,7 +36,7 @@
 
 <script>
 import {computed} from '@vue/runtime-core'
-import {store} from '@/store'
+import {store} from "@/store";
 
 export default {
   name: "FinalChecks",

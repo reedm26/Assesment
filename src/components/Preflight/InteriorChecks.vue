@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import {store} from '@/store'
 import {computed} from '@vue/runtime-core'
+import {store} from "@/store";
 
 export default {
   data() {
