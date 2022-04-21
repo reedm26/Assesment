@@ -83,7 +83,7 @@ export default {
       if (
           this.store.interiorValidationArray.length >= this.interiorChecks.length
       ) {
-        this.store.interiorSectionValidation = true;
+        this.store.interiorSectionValidation = !this.store.interiorSectionValidation;
       }
     },
   },

@@ -85,7 +85,7 @@ export default {
       if (
           this.store.exteriorValidationArray.length >= this.exteriorChecks.length
       ) {
-        this.store.exteriorSectionValidtion = true;
+        this.store.exteriorSectionValidtion = !this.store.exteriorSectionValidtion;
       }
     },
   },

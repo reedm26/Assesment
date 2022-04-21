@@ -95,7 +95,7 @@ export default {
         this.store.finalValidationArray.push(check);
       }
       if (this.store.finalValidationArray.length >= this.finalChecks.length) {
-        this.store.finalSectionValidtion = true;
+        this.store.finalSectionValidtion = !this.store.finalSectionValidtion;
       }
     },
     filterQuote() {

@@ -96,7 +96,7 @@ export default {
           this.store.paperworkValidationArray.length >=
           this.paperworkChecks.length
       ) {
-        this.store.paperworkSectionValidation = true;
+        this.store.paperworkSectionValidation = !this.store.paperworkSectionValidation;
       }
     },
   },
