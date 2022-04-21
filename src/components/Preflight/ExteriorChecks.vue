@@ -5,7 +5,7 @@
               data-bs-toggle="collapse"
               data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         Exterior
-        <span v-if="sectionValid === true" class="badge rounded-pill bg-success">Success</span>
+        <span v-if="this.store.exteriorSectionValidtion === true" class="badge rounded-pill bg-success">Success</span>
         <span v-else class="badge rounded-pill bg-danger">Not Valid</span>
       </button>
     </h2>
@@ -34,47 +34,18 @@
     </div>
   </div>
 </template>
-
 <script>
 
-
+import {computed} from '@vue/runtime-core'
+import {store} from '../../store'
 export default {
   name: "ExteriorChecks",
   data() {
     return {
       sectionValid: false,
-      exteriorChecks: [
-        {
-          id: 5,
-          title: "Check for dents and corrosion",
-          valid: false
-        },
-        {
-          id: 6,
-          title: "Inspect exterior of aircraft for dirt, ice, or snow",
-          valid: false
-        },
-        {
-          id: 7,
-          title: "Check proper operation of ailerons, flaps, and rudders",
-          valid: false
-        },
-        {
-          id: 8,
-          title: "Check proper operation of horizontal stabilizer",
-          valid: false
-        },
-        {
-          id: 9,
-          title: "Inspect fuel tanks",
-          valid: false
-        },
-        {
-          id: 10,
-          title: "Inspect propeller(s)",
-          valid: false
-        },
-      ]
+      store,
+      exteriorChecks : computed(() => store.checks.filter(c => c.checkType === "Exterior")),
+    
     }
   },
   methods: {
@@ -93,10 +64,11 @@ export default {
       }
     },
     allChecksValid(check, index) {
+    
       if ((this.exteriorChecks.length - 1) === index && check.valid === true) {
-        return this.sectionValid = true
+        return this.store.exteriorSectionValidtion = true
       } else {
-        return this.sectionValid = false
+        return this.store.exteriorSectionValidtion = false
       }
     }
   }

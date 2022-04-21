@@ -6,7 +6,7 @@
       <InteriorChecks />
       <FinalChecks />
     </div>
-    <div>{{ this.quote }}
+    <div id="quote" class="visualy-hidden">{{ this.quote }}
     </div>
     <button style="margin: 1rem;" class="btn-secondary btn" type="button" @click="filterQuote">Quote</button>
   </div>
@@ -48,5 +48,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

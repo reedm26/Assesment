@@ -14,7 +14,7 @@
       <div class="accordion-body">
         <ol class="list-group list-group-numbered">
           <li class="list-group-item d-flex justify-content-between align-items-start"
-              v-for="(c, index) in interiorChecks"
+             v-for="(c, index) in interiorChecks"
               :key="index">
             <div class="ms-2 me-auto">
               <div class="fw-bold">{{ c.title }}</div>
@@ -35,39 +35,14 @@
 </template>
 
 <script>
+import {  store } from '../../store'
+import {computed} from '@vue/runtime-core'
 export default {
-  name: "InteriorChecks",
-  data() {
-    return {
-      sectionValid: false,
-      interiorChecks: [
-        {
-          id: 11,
-          title: "Verify fuel pressure",
-          valid: false
-        },
-        {
-          id: 12,
-          title: "Verify oil pressure",
-          valid: false
-        },
-        {
-          id: 13,
-          title: "Check settings and tunability of radio",
-          valid: false
-        },
-        {
-          id: 14,
-          title: "Check navigational instrument health",
-          valid: false
-        },
-        {
-          id: 15,
-          title: "Check fire extinguisher readiness",
-          valid: false
-        },
-      ]
-    }
+  data(){
+  return{
+  sectionValid: false,
+  interiorChecks : computed(() => store.checks.filter(c => c.checkType === "Interior")),
+  }
   },
   methods: {
     runChecks(check, index) {
@@ -92,7 +67,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 

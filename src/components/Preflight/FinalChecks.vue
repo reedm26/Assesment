@@ -35,29 +35,14 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
+import {store} from '../../store'
 export default {
   name: "FinalChecks",
   data() {
     return {
       sectionValid: false,
-      finalChecks: [
-        {
-          id: 16,
-          title: "Ensure doors and windows are locked",
-          valid: false
-        },
-        {
-          id: 17,
-          title: "Turn on landing, taxi, and strobe lights",
-          valid: false
-        },
-        {
-          id: 18,
-          title: "Ensure transponder is on",
-          valid: false
-        },
-
-      ]
+      finalChecks: computed(() => store.checks.filter(c => c.checkType === "Final")),
     }
   },
   methods: {

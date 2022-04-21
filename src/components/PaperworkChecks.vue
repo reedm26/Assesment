@@ -6,7 +6,7 @@
               aria-expanded="true" aria-controls="collapseOne">
 
         Paperwork
-        <span v-if="sectionValid === true" class="badge rounded-pill bg-success">Success</span>
+        <span v-if="this.store.paperworkSectionValidation === true" class="badge rounded-pill bg-success">Success</span>
         <span v-else class="badge rounded-pill bg-danger">Not Valid</span>
       </button>
     </h2>
@@ -18,13 +18,13 @@
         <div>
           <div class="cardsContainer">
             <div class="card" style="width: 18rem;" v-for="(c, index) in paperworkChecks" :key="index">
-              <img :src=c.img class="card-img-top" style=" height: 11rem;" alt={{c.title}}>
+              <img :src=c.img class="card-img-top" style=" height: 11rem;" :alt=c.title>
               <div class="card-body">
                 <h5 class="card-title">{{ c.title }}</h5>
-                <h4 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h4>
+                <!-- <h4 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h4>
                 <p :key="c.id" v-if="index === 0 && c.valid === false"> Start here</p>
-                <p style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </p>
-                <button v-bind="(c)" type="button" :key="index" @click="runChecks(c, index)"
+                <p style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </p> -->
+                <button v-bind="(c)" type="button" :key="index" @click="runChecks(c)"
                         class="btn btn-primary">Run Check
                 </button>
               </div>
@@ -38,73 +38,66 @@
 </template>
 
 <script>
-import AirCertification from '../assets/airworthiness-cert.webp'
-import WeightBalanceCertification from '../assets/weight-and-balance.png'
-import PilotHandbook from '../assets/Pilot-Handbook.jpeg'
-import PilotLicense from '../assets/PilotLicense.jpeg'
-
+import {computed} from '@vue/runtime-core'
+import {store} from '../store'
 export default {
 
   name: "PaperworkChecks",
 
   data() {
     return {
-      sectionValid: false,
-      paperworkChecks: [
-        {
-          id: 1,
-          title: "AirWorthiness Certification",
-          img: AirCertification,
-          valid: false
-        },
-        {
-          id: 2,
-          title: "Weight & Balance",
-          img: WeightBalanceCertification,
-          valid: false
-        },
-        {
-          id: 3,
-          title: "Handbook",
-          img: PilotHandbook,
-          valid: false
-        },
-        {
-          id: 4,
-          title: "License Valid",
-          img: PilotLicense,
-          valid: false
-        },
-
-      ],
+      paperworkChecks : computed(() => store.checks.filter(c => c.checkType === "Paper")),
+      paperworkSectionValidation : computed(() => store.paperworkSectionValidation),
+      paperworkValidationArray : computed(() => store.paperworkValidationArray),
+      store
     }
   },
 
   methods: {
-    runChecks(check, index) {
-      this.validatePreviousCheck(check, index)
-      this.allChecksValid(check, index)
+    runChecks(check) {
+      check.valid = !check.valid
+      console.log("run checks", check)
+      this.allChecksValid(check)
     },
-
-    validatePreviousCheck(check, index) {
-      if (index === 0) {
-        return check.valid = !check.valid
-      } else if (this.paperworkChecks[index -= 1].valid === false) {
-        return check.valid = false
-      } else {
-        return check.valid = !check.valid
+    allChecksValid(check) {
+      if(check.valid == true) {
+        this.store.paperworkValidationArray.push(check)
       }
-    },
-
-    allChecksValid(check, index) {
-      if ((this.paperworkChecks.length - 1) === index && check.valid === true) {
-        return this.sectionValid = true
-      } else {
-        return this.sectionValid = false
+      if(this.store.paperworkValidationArray.length >= this.paperworkChecks.length){
+        this.store.paperworkSectionValidation = true
+        document.getElementById("quote").classList.remove("visualy-hidden")
       }
-    }
+      else{
+      console.log("array does not equal other array")
+      }
+  },
+
   }
-}
+  }
+      // const validPaperworkChecks = []
+
+      // if(check.valid == true){
+      //   console.log('checking validation', check.valid)
+      //   this.validPaperworkChecks.push(check)
+      //   console.log(this.validPaperworkChecks, 'array')
+      //   }
+      // if(validPaperworkChecks.length === this.paperworkChecks.length){
+      //   this.store.paperworkSectionValidation = true
+      // }else{
+      //   this.store.paperworkSectionValidation = false
+      // }
+    // },
+
+    // validatePreviousCheck(check, index) {
+    //   if (index === 0) {
+    //     return check.valid = !check.valid
+    //   } else if (this.paperworkChecks[index -= 1].valid === false) {
+    //     return check.valid = false
+    //   } else {
+    //     return check.valid = !check.valid
+    //   }
+    // },
+
 
 </script>
 
