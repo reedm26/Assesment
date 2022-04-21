@@ -5,7 +5,7 @@
               data-bs-toggle="collapse"
               data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
         Final
-        <span v-if="sectionValid === true" class="badge rounded-pill bg-success">Success</span>
+        <span v-if="this.store.finalSectionValidtion === true" class="badge rounded-pill bg-success">Success</span>
         <span v-else class="badge rounded-pill bg-danger">Not Valid</span>
       </button>
     </h2>
@@ -35,38 +35,45 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
-import {store} from '../../store'
+import {computed} from '@vue/runtime-core'
+import {store} from '@/store'
+
 export default {
   name: "FinalChecks",
   data() {
     return {
-      sectionValid: false,
+      // sectionValid: false,
+      store,
       finalChecks: computed(() => store.checks.filter(c => c.checkType === "Final")),
     }
   },
   methods: {
-    runChecks(check, index) {
-      this.validatePreviousCheck(check, index)
-      this.allChecksValid(check, index)
+    runChecks(check) {
+      check.valid = !check.valid
+      console.log("run checks", check)
+      this.allChecksValid(check)
     },
 
-    validatePreviousCheck: function (checks, index) {
-      if (index === 0) {
-        return checks.valid = !checks.valid
-      } else if (this.finalChecks[index -= 1].valid === false) {
-        return checks.valid = false
+    // validatePreviousCheck: function (checks, index) {
+    //   if (index === 0) {
+    //     return checks.valid = !checks.valid
+    //   } else if (this.finalChecks[index -= 1].valid === false) {
+    //     return checks.valid = false
+    //   } else {
+    //     return checks.valid = !checks.valid
+    //   }
+    // },
+    allChecksValid(check) {
+      if (check.valid === true) {
+        this.store.finalValidationArray.push(check)
+      }
+      if (this.store.finalValidationArray.length >= this.finalChecks.length) {
+        this.store.finalSectionValidtion = true
+        document.getElementById("quote").classList.remove("visualy-hidden")
       } else {
-        return checks.valid = !checks.valid
+        console.log("array does not equal other array")
       }
     },
-    allChecksValid(check, index) {
-      if ((this.finalChecks.length - 1) === index && check.valid === true) {
-        return this.sectionValid = true
-      } else {
-        return this.sectionValid = false
-      }
-    }
   }
 }
 </script>

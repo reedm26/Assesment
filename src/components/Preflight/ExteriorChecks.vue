@@ -19,12 +19,14 @@
             <div class="ms-2 me-auto">
               <div class="fw-bold">{{ c.title }}</div>
               <h6 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h6>
-              <a :key="c.id" v-if="index === 0 && c.valid === false"> Start here</a>
-              <a style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </a></div>
+              <!--              <a :key="c.id" v-if="index === 0 && c.valid === false"> Start here</a>-->
+              <!--              <a style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </a>
+              </div>-->
+            </div>
             <button
                 v-bind="(c)"
                 type="button"
-                :key="index" @click="runChecks(c, index)"
+                :key="index" @click="runChecks(c)"
                 class="btn btn-primary">Run Check
             </button>
           </li>
@@ -37,40 +39,45 @@
 <script>
 
 import {computed} from '@vue/runtime-core'
-import {store} from '../../store'
+import {store} from '@/store'
+
 export default {
   name: "ExteriorChecks",
   data() {
     return {
-      sectionValid: false,
+      // sectionValid: false,
       store,
-      exteriorChecks : computed(() => store.checks.filter(c => c.checkType === "Exterior")),
-    
+      exteriorChecks: computed(() => store.checks.filter(c => c.checkType === "Exterior")),
+
     }
   },
   methods: {
-    runChecks(check, index) {
-      this.validatePreviousCheck(check, index)
-      this.allChecksValid(check, index)
+    runChecks(check) {
+      check.valid = !check.valid
+      console.log("run checks", check)
+      this.allChecksValid(check)
+    },
+    allChecksValid(check) {
+      if (check.valid === true) {
+        this.store.exteriorValidationArray.push(check)
+      }
+      if (this.store.exteriorValidationArray.length >= this.exteriorChecks.length) {
+        this.store.exteriorSectionValidtion = true
+        document.getElementById("quote").classList.remove("visualy-hidden")
+      } else {
+        console.log("array does not equal other array")
+      }
     },
 
-    validatePreviousCheck: function (checks, index) {
-      if (index === 0) {
-        return checks.valid = !checks.valid
-      } else if (this.exteriorChecks[index -= 1].valid === false) {
-        return checks.valid = false
-      } else {
-        return checks.valid = !checks.valid
-      }
-    },
-    allChecksValid(check, index) {
-    
-      if ((this.exteriorChecks.length - 1) === index && check.valid === true) {
-        return this.store.exteriorSectionValidtion = true
-      } else {
-        return this.store.exteriorSectionValidtion = false
-      }
-    }
+    // validatePreviousCheck: function (checks, index) {
+    //   if (index === 0) {
+    //     return checks.valid = !checks.valid
+    //   } else if (this.exteriorChecks[index -= 1].valid === false) {
+    //     return checks.valid = false
+    //   } else {
+    //     return checks.valid = !checks.valid
+    //   }
+    // },
   }
 }
 </script>

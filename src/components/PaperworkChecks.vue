@@ -21,9 +21,9 @@
               <img :src=c.img class="card-img-top" style=" height: 11rem;" :alt=c.title>
               <div class="card-body">
                 <h5 class="card-title">{{ c.title }}</h5>
-                <!-- <h4 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h4>
-                <p :key="c.id" v-if="index === 0 && c.valid === false"> Start here</p>
-                <p style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </p> -->
+                <h4 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h4>
+                <!--                <p :key="c.id" v-if="index === 0 && c.valid === false"> Start here</p>-->
+                <!--                <p style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </p> -->
                 <button v-bind="(c)" type="button" :key="index" @click="runChecks(c)"
                         class="btn btn-primary">Run Check
                 </button>
@@ -39,17 +39,18 @@
 
 <script>
 import {computed} from '@vue/runtime-core'
-import {store} from '../store'
+import {store} from '@/store'
+
 export default {
 
   name: "PaperworkChecks",
 
   data() {
     return {
-      paperworkChecks : computed(() => store.checks.filter(c => c.checkType === "Paper")),
-      paperworkSectionValidation : computed(() => store.paperworkSectionValidation),
-      paperworkValidationArray : computed(() => store.paperworkValidationArray),
-      store
+      store,
+      paperworkChecks: computed(() => store.checks.filter(c => c.checkType === "Paper")),
+      // paperworkSectionValidation: computed(() => store.paperworkSectionValidation),
+      // paperworkValidationArray: computed(() => store.paperworkValidationArray),
     }
   },
 
@@ -60,43 +61,42 @@ export default {
       this.allChecksValid(check)
     },
     allChecksValid(check) {
-      if(check.valid == true) {
+      if (check.valid === true) {
         this.store.paperworkValidationArray.push(check)
       }
-      if(this.store.paperworkValidationArray.length >= this.paperworkChecks.length){
+      if (this.store.paperworkValidationArray.length >= this.paperworkChecks.length) {
         this.store.paperworkSectionValidation = true
         document.getElementById("quote").classList.remove("visualy-hidden")
+      } else {
+        console.log("array does not equal other array")
       }
-      else{
-      console.log("array does not equal other array")
-      }
-  },
+    },
 
   }
-  }
-      // const validPaperworkChecks = []
+}
+// const validPaperworkChecks = []
 
-      // if(check.valid == true){
-      //   console.log('checking validation', check.valid)
-      //   this.validPaperworkChecks.push(check)
-      //   console.log(this.validPaperworkChecks, 'array')
-      //   }
-      // if(validPaperworkChecks.length === this.paperworkChecks.length){
-      //   this.store.paperworkSectionValidation = true
-      // }else{
-      //   this.store.paperworkSectionValidation = false
-      // }
-    // },
+// if(check.valid == true){
+//   console.log('checking validation', check.valid)
+//   this.validPaperworkChecks.push(check)
+//   console.log(this.validPaperworkChecks, 'array')
+//   }
+// if(validPaperworkChecks.length === this.paperworkChecks.length){
+//   this.store.paperworkSectionValidation = true
+// }else{
+//   this.store.paperworkSectionValidation = false
+// }
+// },
 
-    // validatePreviousCheck(check, index) {
-    //   if (index === 0) {
-    //     return check.valid = !check.valid
-    //   } else if (this.paperworkChecks[index -= 1].valid === false) {
-    //     return check.valid = false
-    //   } else {
-    //     return check.valid = !check.valid
-    //   }
-    // },
+// validatePreviousCheck(check, index) {
+//   if (index === 0) {
+//     return check.valid = !check.valid
+//   } else if (this.paperworkChecks[index -= 1].valid === false) {
+//     return check.valid = false
+//   } else {
+//     return check.valid = !check.valid
+//   }
+// },
 
 
 </script>
