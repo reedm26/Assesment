@@ -6,8 +6,8 @@
               aria-expanded="true" aria-controls="collapseOne">
 
         Paperwork
-        <span v-if="this.store.paperworkSectionValidation === true" class="badge rounded-pill bg-success">Success</span>
-        <span v-else class="badge rounded-pill bg-danger">Not Valid</span>
+        <span v-if="this.store.paperworkSectionValidation" class="badge rounded-pill bg-success">Complete</span>
+        <span v-else class="badge rounded-pill bg-danger">Not Completed</span>
       </button>
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -21,12 +21,14 @@
               <img :src=c.img class="card-img-top" style=" height: 11rem;" :alt=c.title>
               <div class="card-body">
                 <h5 class="card-title">{{ c.title }}</h5>
-                <h4 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h4>
-                <!--                <p :key="c.id" v-if="index === 0 && c.valid === false"> Start here</p>-->
-                <!--                <p style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </p> -->
+                <!--                <h4 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h4>-->
                 <button v-bind="(c)" type="button" :key="index" @click="runChecks(c)"
                         class="btn btn-primary">Run Check
                 </button>
+              </div>
+              <div>
+                <i class="bi bi-check-circle checkValid" :key="c.id" v-show="c.valid === true"></i>
+
               </div>
             </div>
           </div>
@@ -109,6 +111,8 @@ export default {
 
 .checkValid {
   color: lawngreen;
+  align-self: center;
+  margin-bottom: 1rem;
 }
 
 </style>

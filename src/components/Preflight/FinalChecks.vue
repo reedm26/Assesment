@@ -5,8 +5,8 @@
               data-bs-toggle="collapse"
               data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
         Final
-        <span v-if="this.store.finalSectionValidtion === true" class="badge rounded-pill bg-success">Success</span>
-        <span v-else class="badge rounded-pill bg-danger">Not Valid</span>
+        <span v-if="this.store.finalSectionValidtion" class="badge rounded-pill bg-success">Complete</span>
+        <span v-else class="badge rounded-pill bg-danger">Not Completed</span>
       </button>
     </h2>
     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
@@ -18,9 +18,9 @@
             <div class="ms-2 me-auto">
               <div class="fw-bold">{{ c.title }}</div>
               <h6 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h6>
-              <a :key="c.id" v-if="index === 0 && c.valid === false"> Start here</a>
-              <a style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </a></div>
+            </div>
             <button
+                v-if="this.store.interiorSectionValidation"
                 v-bind="(c)"
                 type="button"
                 :key="index" @click="runChecks(c, index)"
@@ -53,16 +53,6 @@ export default {
       console.log("run checks", check)
       this.allChecksValid(check)
     },
-
-    // validatePreviousCheck: function (checks, index) {
-    //   if (index === 0) {
-    //     return checks.valid = !checks.valid
-    //   } else if (this.finalChecks[index -= 1].valid === false) {
-    //     return checks.valid = false
-    //   } else {
-    //     return checks.valid = !checks.valid
-    //   }
-    // },
     allChecksValid(check) {
       if (check.valid === true) {
         this.store.finalValidationArray.push(check)

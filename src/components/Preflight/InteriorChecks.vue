@@ -5,8 +5,8 @@
               data-bs-toggle="collapse"
               data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
         Interior
-        <span v-if="this.store.interiorSectionValidation === true" class="badge rounded-pill bg-success">Success</span>
-        <span v-else class="badge rounded-pill bg-danger">Not Valid</span>
+        <span v-if="this.store.interiorSectionValidation" class="badge rounded-pill bg-success">Complete</span>
+        <span v-else class="badge rounded-pill bg-danger">Not Completed</span>
       </button>
     </h2>
     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
@@ -19,10 +19,9 @@
             <div class="ms-2 me-auto">
               <div class="fw-bold">{{ c.title }}</div>
               <h6 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h6>
-              <!--              <a :key="c.id" v-if="index === 0 && c.valid === false"> Start here</a>-->
-              <!--              <a style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </a>-->
             </div>
             <button
+                v-if="this.store.exteriorSectionValidtion"
                 v-bind="(c)"
                 type="button"
                 :key="index" @click="runChecks(c)"

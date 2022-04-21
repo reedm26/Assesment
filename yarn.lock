@@ -1575,7 +1575,7 @@
   dependencies:
     "@vue/shared" "3.2.33"
 
-"@vue/runtime-core@3.2.33":
+"@vue/runtime-core@^3.2.33", "@vue/runtime-core@3.2.33":
   "integrity" "sha512-N2D2vfaXsBPhzCV3JsXQa2NECjxP3eXgZlFqKh4tgakp3iX6LCGv76DLlc+IfFZq+TW10Y8QUfeihXOupJ1dGw=="
   "resolved" "https://registry.npmjs.org/@vue/runtime-core/-/runtime-core-3.2.33.tgz"
   "version" "3.2.33"

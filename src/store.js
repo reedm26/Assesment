@@ -8,7 +8,7 @@ export const store = reactive({
   checks: [
     {
       id: 1,
-      title: "AirWorthiness Certification",
+      title: "Air Worthiness",
       img: AirworthinessCert,
       valid: false,
       checkType: "Paper",

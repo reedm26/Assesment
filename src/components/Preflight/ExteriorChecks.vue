@@ -1,12 +1,13 @@
 <template>
-  <div class="accordion-item">
+  <div class="accordion-item" disabled={!this.store.paperworkSectionValidation}>
     <h2 class="accordion-header" id="headingTwo">
-      <button style="white-space: break-spaces;" class="accordion-button collapsed" type="button"
+      <button style="white-space: break-spaces;"
+              class="accordion-button collapsed" type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         Exterior
-        <span v-if="this.store.exteriorSectionValidtion === true" class="badge rounded-pill bg-success">Success</span>
-        <span v-else class="badge rounded-pill bg-danger">Not Valid</span>
+        <span v-if="this.store.exteriorSectionValidtion" class="badge rounded-pill bg-success">Complete</span>
+        <span v-else class="badge rounded-pill bg-danger">Not Completed</span>
       </button>
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -18,12 +19,11 @@
               :key="index">
             <div class="ms-2 me-auto">
               <div class="fw-bold">{{ c.title }}</div>
-              <h6 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h6>
-              <!--              <a :key="c.id" v-if="index === 0 && c.valid === false"> Start here</a>-->
-              <!--              <a style="color: red" :key="index" v-else-if="c.valid === false"> Previous needs to be checked </a>
-              </div>-->
+              <!--              <h6 class="checkValid" :key="c.id" v-show="c.valid === true"> Yes </h6>-->
             </div>
+            <i class="bi bi-check-circle checkValid" :key="c.id" v-show="c.valid === true"></i>
             <button
+                v-if="this.store.paperworkSectionValidation"
                 v-bind="(c)"
                 type="button"
                 :key="index" @click="runChecks(c)"
@@ -85,5 +85,7 @@ export default {
 <style scoped>
 .checkValid {
   color: lawngreen;
+  align-self: center;
+  margin-right: 1rem;
 }
 </style>
